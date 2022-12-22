@@ -3,7 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  contentEnviroments : [
+    {
+      name: 'DBRANCH-DEV',
+      url: 'https://dev.dbranch.asee.dev/v1',
+      isActive: true
+    },
+    {
+      name: 'HALK-DEV',
+      url: 'https://dev-halkbbg.df.asee.dev/v1',
+      isActive: false
+    }
+  ]
 };
 
 /*

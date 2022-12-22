@@ -1,0 +1,30 @@
+.navigation {
+  margin: 1rem 0rem;
+  font-size: small;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .filters {
+
+    display: flex;
+    gap: 0.5rem;
+
+  }
+
+  .breadcrumz {
+    .crumb:last-child {
+      font-weight: bold;
+    }
+    display: flex;
+    .crumb {
+      display: flex;
+      align-items: center;
+      span {
+        padding: 0 0.5rem;
+      }
+    }
+  }
+}
+

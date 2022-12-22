@@ -1,0 +1,15 @@
+<div>
+  <app-enviroment-select (enviromentSelectEvent)="handleEnviromentSelect($event)"></app-enviroment-select>
+  <app-content-view-navigation
+    [path]="currentRoute"
+    (selectedCrumbEvent)="hanldeCrumbSelect($event)"></app-content-view-navigation>
+  <app-content-view-table
+    [contentData]="folderData"
+    (folderSelectedEvent)="handleFolderSelectedEvent($event)"
+    (itemDeletedEvent)="handleItemDeleted($event)"
+  ></app-content-view-table>
+  <app-content-view-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (changePageEvent)="handlePageChangeEvent($event)" ></app-content-view-pagination>
+</div>

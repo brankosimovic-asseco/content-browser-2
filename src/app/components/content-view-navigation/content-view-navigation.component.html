@@ -1,0 +1,20 @@
+<div class="navigation">
+  <div class="breadcrumz">
+    <div  class="crumb"><span>❯</span> <div style="cursor:pointer" (click)="navigateToFolder('')">Root</div></div>
+    <div *ngFor="let crumb of crumbs" class="crumb"><span>❯</span> <div style="cursor:pointer" (click)="navigateToFolder(crumb)">{{crumb}}</div></div>
+  </div>
+
+  <div class="filters">
+    <select name="Sort by" id="">
+      <option value="">Date</option>
+    </select>
+    <select name="Sort order" id="">
+      <option value="">ACS</option>
+      <option value="">DECS</option>
+    </select>
+    <button>New Folder</button>
+    <button>Upload</button>
+    <input placeholder="Search" type="search">
+  </div>
+
+</div>

@@ -1,0 +1,51 @@
+.content-table {
+  @mixin action-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  table {
+    font-size: small;
+    border-collapse:collapse;
+    td {
+      padding: 0.175rem 0.25rem;
+      border-bottom: 1px solid rgb(207, 207, 207); /* move spacing to the cell */
+
+    }
+    .item-name {
+      color: rgb(68, 68, 68);
+    }
+    .item-kind {
+      filter: invert(0.5) sepia(1) saturate(5) hue-rotate(200deg);
+    }
+  }
+  .content-table-row {
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(241, 241, 241);
+    }
+    .action-button {
+      @include action-button();
+    }
+
+    .warn {
+      filter: invert(0.5) sepia(1) saturate(5) hue-rotate(315deg)
+    }
+    .allow {
+      filter: invert(0.5) sepia(1) saturate(5) hue-rotate(115deg);
+    }
+    .primary {
+      filter: invert(0.5) sepia(1) saturate(5) hue-rotate(200deg)
+    }
+    .disabled {
+      filter: opacity(0.25);
+      cursor: not-allowed;
+    }
+
+  }
+}
+
+

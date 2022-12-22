@@ -1,0 +1,28 @@
+.enviroment-select {
+  .warning-message {
+    font-size: small;
+    font-weight: bold;
+    color: rgb(255, 77, 0);
+  }
+  .env-buttons {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5rem 0;
+    gap: 0.5rem;
+    .active {
+      background-color: #53abdb !important
+    }
+    .env-button {
+      color: white;
+      background-color: #d2d2d2;
+      border: none;
+      border-radius: 2rem;
+      cursor: pointer;
+      /* font-weight: bold; */
+      padding: 0.25rem 0.5rem;
+      &:hover {
+        background-color: #ababab;
+      }
+    }
+  }
+}

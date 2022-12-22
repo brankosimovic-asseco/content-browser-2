@@ -1,0 +1,12 @@
+<div class="pagination">
+  <button>&lt;&lt;</button>
+  <button (click)="previousPage()">&lt;</button>
+  <div class="page">{{currentPage}}/{{totalPages === 0 ? 1: totalPages}}</div>
+  <button (click)="nextPage()">&gt;</button>
+  <button>&gt;&gt;</button>
+  <select name="" id="">
+    <option value="">20</option>
+    <option value="">50</option>
+    <option value="">100</option>
+  </select>
+</div>

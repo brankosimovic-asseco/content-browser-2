@@ -17,17 +17,30 @@ export class ContentService {
   constructor(private http: HttpClient) { }
 
   //Folders
-  public getFolderDataByPath(path: string, kind?: string, page?: number, pageSize?:number, subfolders: boolean = false):Observable<ContentList> {
+  public getFolderDataByPath(path: string, kind?: string, page?: number, pageSize?:number, sortBy?: string, sortOrder?: string, subfolders: boolean = false):Observable<ContentList> {
     let params = new HttpParams();
     params = params.append('kind', kind ?? 'any');
     params = params.append('page-size', pageSize ?? 10);
     params = params.append('page', page ?? 1)
     params = params.append('subfolders', subfolders);
+    params = params.append('sort-by', sortBy ?? '');
+    params = params.append('sort-order', sortOrder ?? 'acs');
     console.log(params.keys(), 'params', page)
     return this.http.get<ContentList>(`${this.conentUrl}${this.reponame}/${path}`, {params: params}).pipe(map(r => camelcaseKeys(r, {deep: true})));
   }
 
-  public searchFolderByPath() {}
+  public searchFolderByPath(q: string, path: string, kind?: string, page?: number, pageSize?:number, sortBy?: string, sortOrder?: string, subfolders: boolean = false) {
+    let params = new HttpParams();
+    params = params.append('kind', kind ?? 'any');
+    params = params.append('page-size', pageSize ?? 10);
+    params = params.append('page', page ?? 1)
+    params = params.append('subfolders', subfolders);
+    params = params.append('sort-by', sortBy ?? '');
+    params = params.append('sort-order', sortOrder ?? 'acs');
+    params = params.append('q', q);
+    params = params.append('search-mode', 'any');
+    return this.http.get<ContentList>(`${this.conentUrl}${this.reponame}/${path}/search`, {params: params}).pipe(map(r => camelcaseKeys(r, {deep: true})));
+  }
   public searchFolderById() {}
   public getFolderMetadataByPath() {}
   public getFolderMetadataById() {}

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-content-view-navigation',
@@ -12,8 +13,16 @@ export class ContentViewNavigationComponent implements OnInit {
   }
 
   @Output() selectedCrumbEvent = new EventEmitter<string>();
+  @Output() selectedSortByMethod = new EventEmitter<string>();
+  @Output() selectedSortOrder = new EventEmitter<string>();
 
-  constructor() { }
+  @Output() changedSearchQueryEvent = new EventEmitter<string>();
+
+  public searchQueryChanged = new Subject<any>();
+
+  constructor() {
+    this.updateSearchQuery();
+  }
 
   ngOnInit(): void {;
   }
@@ -23,6 +32,28 @@ export class ContentViewNavigationComponent implements OnInit {
     console.log(folder,'ff');
     // send event to navigation, and then from navigation to overview to rerender the component
     this.selectedCrumbEvent.emit(this.crumbs.slice(0, this.crumbs.indexOf(folder) + 1).join('/'))
+  }
+
+  public selectSortByChange($event: Event) {
+    const value = ($event?.target as HTMLTextAreaElement).value;
+    this.selectedSortByMethod.emit(value);
+  }
+
+  public selectSortOrderChange($event: Event) {
+    const value = ($event?.target as HTMLTextAreaElement).value;
+    this.selectedSortOrder.emit(value);
+  }
+
+  private updateSearchQuery() {
+    this.searchQueryChanged.pipe(
+      debounceTime(600),
+      distinctUntilChanged()
+    ).subscribe((event) => {
+      // emit event to view;
+      const searchQuery = (event.target as HTMLTextAreaElement).value;
+      console.log(searchQuery);
+      this.changedSearchQueryEvent.emit(searchQuery);
+    });
   }
 
 }

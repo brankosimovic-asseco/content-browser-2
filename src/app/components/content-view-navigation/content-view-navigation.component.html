@@ -5,16 +5,19 @@
   </div>
 
   <div class="filters">
-    <select name="Sort by" id="">
-      <option value="">Date</option>
+    <select (change)="selectSortByChange($event)" name="Sort by" id="">
+      <option disabled selected value> Select Sort by... </option>
+      <option value="created-on">Created on</option>
+      <option value="created-by">Created by</option>
+      <option value="change-on">Changed on</option>
     </select>
-    <select name="Sort order" id="">
-      <option value="">ACS</option>
-      <option value="">DECS</option>
+    <select (change)="selectSortOrderChange($event)" name="Sort order" id="">
+      <option value="asc">ACS</option>
+      <option value="desc">DECS</option>
     </select>
     <button>New Folder</button>
     <button>Upload</button>
-    <input placeholder="Search" type="search">
+    <input (input)="this.searchQueryChanged.next($event)" placeholder="Search" type="search">
   </div>
 
 </div>

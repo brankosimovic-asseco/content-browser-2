@@ -19,7 +19,8 @@ export class EnviromentSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.enviroments = JSON.parse(localStorage.getItem('content_enviroments') ?? '[]');
-    if(this.enviroments.length === 0) this.enviroments = environment.contentEnviroments;
+    if(this.enviroments.length === 0)
+      this.enviroments = environment.contentEnviroments;
     this.tokenInput = new FormControl(localStorage.getItem('local_storage_token') ?? '');
     this.tokenInput.valueChanges.subscribe((value) => {
       console.log(value);

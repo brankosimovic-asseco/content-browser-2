@@ -15,8 +15,8 @@
       <td><div><img [ngClass]="item?.kind === 'folder' ? 'item-kind' : ''" height="20px" [src]="item?.kind === 'folder' ? '../../../assets/folder.svg' : '../../../assets/doc.svg'"></div></td>
       <td (click)="selectItem(item)" class="item-name">{{item?.name}}</td>
       <td style="padding: 0.25rem 0.5rem;">{{item?.createdBy}}</td>
-      <td style="padding: 0.25rem 0.5rem">{{item?.createdOn |  date:'yyyy-MM-dd/HH:mm:ss'}}</td>
-      <td style="padding: 0.25rem 0.5rem">{{item?.changedOn |  date:'yyyy-MM-dd/HH:mm:ss'}}</td>
+      <td style="padding: 0.25rem 0.5rem">{{item?.createdOn |  date:'dd-MM-yyyy/HH:mm:ss'}}</td>
+      <td style="padding: 0.25rem 0.5rem">{{item?.changedOn |  date:'dd-MM-yyyy/HH:mm:ss'}}</td>
       <td><button class="action-button" (click)="downloadFile(item)" [disabled]="item.kind === 'folder'">
         <img [class]="item.kind === 'folder' ? 'disabled' : 'primary'" src="../../../assets/actions/download.svg" height="20" alt="">
       </button></td>

@@ -2,7 +2,10 @@
   <app-enviroment-select (enviromentSelectEvent)="handleEnviromentSelect($event)"></app-enviroment-select>
   <app-content-view-navigation
     [path]="currentRoute"
-    (selectedCrumbEvent)="hanldeCrumbSelect($event)"></app-content-view-navigation>
+    (selectedCrumbEvent)="hanldeCrumbSelect($event)"
+    (selectedSortOrder)="handleSelectSortOrder($event)"
+    (changedSearchQueryEvent)="handleSearchQueryChange($event)"
+    (selectedSortByMethod)="handleSelectSortByMethod($event)"></app-content-view-navigation>
   <app-content-view-table
     [contentData]="folderData"
     (folderSelectedEvent)="handleFolderSelectedEvent($event)"

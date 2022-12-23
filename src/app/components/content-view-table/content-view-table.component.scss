@@ -7,15 +7,26 @@
     align-items: center;
   }
   table {
+    width: 100%;
     font-size: small;
     border-collapse:collapse;
     td {
-      padding: 0.175rem 0.25rem;
-      border-bottom: 1px solid rgb(207, 207, 207); /* move spacing to the cell */
+      padding: 0.175rem 0rem;
+      border-bottom: 0.5px solid rgb(207, 207, 207); /* move spacing to the cell */
+      .action-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
 
     }
     .item-name {
       color: rgb(68, 68, 68);
+      display: flex;
+      align-items: center;
+      & img {
+        padding-right: 0.5rem;
+      }
     }
     .item-kind {
       filter: invert(0.5) sepia(1) saturate(5) hue-rotate(200deg);
@@ -27,6 +38,7 @@
     &:hover {
       background-color: rgb(241, 241, 241);
     }
+
     .action-button {
       @include action-button();
     }

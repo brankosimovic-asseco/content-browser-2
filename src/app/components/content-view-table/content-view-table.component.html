@@ -3,25 +3,29 @@
   <table *ngIf="contentData?.items?.length else emptyView">
     <tr>
       <th></th>
-      <th></th>
-      <th>Name</th>
-      <th>Created By</th>
+
+      <th style="text-align: left;">Name</th>
+      <th style="text-align: left;">Created By</th>
       <th>Created On</th>
       <th>Changed On</th>
-      <th colspan="3">Actions</th>
+      <th>Actions</th>
     </tr>
     <tr *ngFor="let item of contentData?.items"  class="content-table-row">
       <td><input type="checkbox"></td>
-      <td><div><img [ngClass]="item?.kind === 'folder' ? 'item-kind' : ''" height="20px" [src]="item?.kind === 'folder' ? '../../../assets/folder.svg' : '../../../assets/doc.svg'"></div></td>
-      <td (click)="selectItem(item)" class="item-name">{{item?.name}}</td>
-      <td style="padding: 0.25rem 0.5rem;">{{item?.createdBy}}</td>
-      <td style="padding: 0.25rem 0.5rem">{{item?.createdOn |  date:'dd-MM-yyyy/HH:mm:ss'}}</td>
-      <td style="padding: 0.25rem 0.5rem">{{item?.changedOn |  date:'dd-MM-yyyy/HH:mm:ss'}}</td>
-      <td><button class="action-button" (click)="downloadFile(item)" [disabled]="item.kind === 'folder'">
-        <img [class]="item.kind === 'folder' ? 'disabled' : 'primary'" src="../../../assets/actions/download.svg" height="20" alt="">
-      </button></td>
-      <td><button (click)="deleteItem(item)" class="action-button" ><img class="warn"  src="../../../assets/actions/delete.svg" height="20" alt=""></button></td>
-      <td><button class="action-button" ><img class="primary" src="../../../assets/actions/info.svg" height="20" alt=""></button></td>
+      <td (click)="selectItem(item)" > <div class="item-name">
+        <div><img [ngClass]="item?.kind === 'folder' ? 'item-kind' : ''" height="20px" [src]="item?.kind === 'folder' ? '../../../assets/folder.svg' : '../../../assets/doc.svg'"></div> <div>{{item?.name}}</div>
+      </div></td>
+      <td style="padding: 0.25rem 0rem;"><div>{{item?.createdBy}}</div></td>
+      <td style="padding: 0.25rem 0rem; text-align: center;">{{item?.createdOn |  date:'dd-MM-yyyy / HH:mm:ss'}}</td>
+      <td style="padding: 0.25rem 0rem; text-align: center;">{{item?.changedOn |  date:'dd-MM-yyyy / HH:mm:ss'}}</td>
+      <td><div class="action-buttons">
+        <button class="action-button" (click)="downloadFile(item)" [disabled]="item.kind === 'folder'">
+          <img [class]="item.kind === 'folder' ? 'disabled' : 'primary'" src="../../../assets/actions/download.svg" height="20" alt="">
+          </button>
+          <button (click)="deleteItem(item)" class="action-button" ><img class="warn"  src="../../../assets/actions/delete.svg" height="20" alt=""></button>
+          <button class="action-button" ><img class="primary" src="../../../assets/actions/info.svg" height="20" alt=""></button>
+      </div>
+      </td>
     </tr>
   </table>
 </div>

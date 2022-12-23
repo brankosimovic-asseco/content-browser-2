@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject, OnInit } from '@angular/core';
 import { ContentList } from 'src/app/models/content-item-list.model';
 import { ContentService } from 'src/app/services/content.service';
 
@@ -33,34 +34,37 @@ export class ContentViewComponent implements OnInit {
 
   public getFolderData(path: string): void {
 
-    this.contentService.getFolderDataByPath(path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder).subscribe((response) => {
-      console.log(response);
-      this.folderData = response;
-      this.currentRoute = path;
-      this.totalPages = response.totalPages ?? 1;
-    });
-  }
+    if(this.searchQuery && this.searchQuery !== '') {
+      if(path == '') path = ' ';
+      this.contentService.searchFolderByPath(this.searchQuery, path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder).subscribe((response) => {
+        console.log(response);
+        this.folderData = response;
+        this.currentRoute = path;
+        this.totalPages = response.totalPages ?? 1;
+      });
+    } else {
+      this.contentService.getFolderDataByPath(path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder).subscribe((response) => {
+        console.log(response);
+        this.folderData = response;
+        this.currentRoute = path;
+        this.totalPages = response.totalPages ?? 1;
+      });
+    }
 
-  public getSearchData(q: string, path: string) {
-    // if the path is an empty stirng the search method returns nothing
-    if(path == '') path = ' ';
-    this.contentService.searchFolderByPath(q, path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder).subscribe((response) => {
-      console.log(response);
-      this.folderData = response;
-      this.currentRoute = path;
-      this.totalPages = response.totalPages ?? 1;
-    });
+
   }
 
   public handleFolderSelectedEvent($event: string) {
     console.log($event);
     this.currentPage = 1;
+
     this.getFolderData($event);
   }
 
   public hanldeCrumbSelect($event: string) {
     console.log($event);
     this.currentPage = 1;
+
     this.getFolderData($event);
     this.currentRoute = $event;
   }
@@ -81,6 +85,7 @@ export class ContentViewComponent implements OnInit {
     if($event) this.getFolderData(this.currentRoute);
     // temp fix
     window.location.reload();
+    // this.contentService = inject(ContentService);
   }
 
   public handleSelectSortByMethod($event: string) {
@@ -95,11 +100,8 @@ export class ContentViewComponent implements OnInit {
 
   public handleSearchQueryChange($event: string) {
     const q = $event;
-    if(q === '')
-      this.getFolderData(this.currentRoute);
-    else
-      this.getSearchData(q, this.currentRoute);
-
+    this.searchQuery = q;
+    this.getFolderData(this.currentRoute);
   }
 
 }

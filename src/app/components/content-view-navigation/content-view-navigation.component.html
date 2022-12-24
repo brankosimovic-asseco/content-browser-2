@@ -1,15 +1,15 @@
 <div class="navigation">
   <div class="breadcrumz">
-    <div  class="crumb"><span>❯</span> <div style="cursor:pointer" (click)="navigateToFolder('')">Root</div></div>
-    <div *ngFor="let crumb of crumbs" class="crumb"><span>❯</span> <div style="cursor:pointer" (click)="navigateToFolder(crumb)">{{crumb}}</div></div>
+    <div  class="crumb"><span>❯</span> <div style="cursor:pointer" class="crumb-name" (click)="navigateToFolder('')">Root</div></div>
+    <div *ngFor="let crumb of crumbs" class="crumb"><span>❯</span> <div class="crumb-name" style="cursor:pointer" (click)="navigateToFolder(crumb)">{{crumb}}</div></div>
   </div>
 
   <div class="filters">
     <select (change)="selectSortByChange($event)" name="Sort by" id="">
       <option disabled selected value>Sort by... </option>
-      <option value="created-on">Created on</option>
-      <option value="created-by">Created by</option>
-      <option value="change-on">Changed on</option>
+      <option value="created-on">Created On</option>
+      <option value="created-by">Created By</option>
+      <option value="change-on">Changed On</option>
     </select>
     <select (change)="selectSortOrderChange($event)" name="Sort order" id="">
       <option value="asc">ACS</option>
@@ -17,7 +17,7 @@
     </select>
     <button>New Folder</button>
     <button>Upload</button>
-    <input aria-keyshortcuts="d" #search (input)="this.searchQueryChanged.next($event)" placeholder="Search" type="search">
+    <input accesskey="s" #search (input)="this.searchQueryChanged.next($event)" placeholder="Search" type="search">
   </div>
 
 </div>

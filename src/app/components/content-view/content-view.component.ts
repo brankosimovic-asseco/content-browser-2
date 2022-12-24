@@ -35,8 +35,15 @@ export class ContentViewComponent implements OnInit {
     this.getFolderData(this.currentRoute);
   }
 
-  public getFolderData(path: string): void {
+  private resetPageFilters() {
+    this.currentPage = 1;
+    this.searchQuery = '';
+    this.navigation.clearSearchField();
+  }
 
+  private getFolderData(path: string): void {
+
+    // FIXME: refactor this
     if(this.searchQuery && this.searchQuery !== '') {
       if(path == '') path = ' ';
       this.contentService.searchFolderByPath(this.searchQuery, path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder).subscribe((response) => {
@@ -58,18 +65,12 @@ export class ContentViewComponent implements OnInit {
   }
 
   public handleFolderSelectedEvent($event: string) {
-    console.log($event);
-    this.currentPage = 1;
-    this.searchQuery = '';
-    this.navigation.clearSearchField();
+    this.resetPageFilters();
     this.getFolderData($event);
   }
 
   public hanldeCrumbSelect($event: string) {
-    console.log($event);
-    this.currentPage = 1;
-    this.searchQuery = '';
-    this.navigation.clearSearchField();
+    this.resetPageFilters();
     this.getFolderData($event);
     this.currentRoute = $event;
   }

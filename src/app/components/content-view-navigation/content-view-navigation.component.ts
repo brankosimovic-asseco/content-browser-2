@@ -9,7 +9,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 export class ContentViewNavigationComponent implements OnInit {
   public crumbs!: string[];
   @Input()  set path(value: string){
-    this.crumbs = value.split('/')?.filter(c => c !== '');
+    this.crumbs = value.split('/')?.filter(c => c !== '' && c !== " ");
   }
 
   @Output() selectedCrumbEvent = new EventEmitter<string>();

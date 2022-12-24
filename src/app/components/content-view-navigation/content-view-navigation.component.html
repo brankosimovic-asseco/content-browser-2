@@ -6,8 +6,8 @@
 
   <div class="filters">
     <div style="position: relative;">
-      <button (click)="toggleNewFolderDialog()">New Folder</button>
-      <div *ngIf="showNewFolderDialog" class="new-folder-dropdown">
+      <button #newFolderButton (click)="toggleNewFolderDialog()">New Folder</button>
+      <div #newFolderForm *ngIf="showNewFolderDialog" class="new-folder-dropdown">
         <label for="">Enter new folder name:</label>
         <input [formControl]="newFolderNameControl" type="text">
         <button [disabled]="newFolderNameControl.value === ''" (click)="addNewFolder(newFolderNameControl?.value)">Add</button>

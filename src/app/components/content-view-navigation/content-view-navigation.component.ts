@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
@@ -22,14 +22,30 @@ export class ContentViewNavigationComponent implements OnInit {
 
   @ViewChild('search') input!: ElementRef;
 
+  @ViewChild('newFolderButton') newFolderButton!: ElementRef;
+  @ViewChild('newFolderForm') newFolderForm!: ElementRef;
+
   public newFolderNameControl = new FormControl('');
 
   public showNewFolderDialog: boolean = false;
 
   public searchQueryChanged = new Subject<any>();
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private renderer: Renderer2) {
     this.updateSearchQuery();
+    this.renderer.listen('window', 'click', (event: Event) => {
+      console.log(this.newFolderForm?.nativeElement.children);
+
+      /**
+       * If we didn't click on the new folder button or dropdown form close the dropdown
+       * we also have to include the dropdown children in the check with the include method
+       */
+      if(event.target !== this.newFolderButton.nativeElement
+        && event.target !== this.newFolderForm?.nativeElement
+        && !Array.from(this.newFolderForm?.nativeElement.children ?? [])?.includes(event.target)){
+          this.showNewFolderDialog = false;
+      }
+    })
   }
 
   ngOnInit(): void {;
@@ -68,6 +84,7 @@ export class ContentViewNavigationComponent implements OnInit {
 
   public toggleNewFolderDialog() {
     this.showNewFolderDialog = !this.showNewFolderDialog;
+    this.newFolderNameControl.setValue('');
   }
 
   private updateSearchQuery() {

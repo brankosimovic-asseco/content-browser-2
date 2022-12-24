@@ -5,6 +5,7 @@
     (selectedCrumbEvent)="hanldeCrumbSelect($event)"
     (selectedSortOrder)="handleSelectSortOrder($event)"
     (changedSearchQueryEvent)="handleSearchQueryChange($event)"
+    (addNewFolderEvent)="handleAddNewFolder($event)"
     (selectedSortByMethod)="handleSelectSortByMethod($event)"></app-content-view-navigation>
   <app-content-view-table
     [contentData]="folderData"

@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
@@ -15,10 +16,15 @@ export class ContentViewNavigationComponent implements OnInit {
   @Output() selectedCrumbEvent = new EventEmitter<string>();
   @Output() selectedSortByMethod = new EventEmitter<string>();
   @Output() selectedSortOrder = new EventEmitter<string>();
+  @Output() addNewFolderEvent = new EventEmitter<string>();
 
   @Output() changedSearchQueryEvent = new EventEmitter<string>();
 
   @ViewChild('search') input!: ElementRef;
+
+  public newFolderNameControl = new FormControl('');
+
+  public showNewFolderDialog: boolean = false;
 
   public searchQueryChanged = new Subject<any>();
 
@@ -51,6 +57,17 @@ export class ContentViewNavigationComponent implements OnInit {
     if(this.input)
       this.input.nativeElement.value = '';
 
+  }
+
+  public addNewFolder(folderName: any) {
+    // emit event
+    console.log(folderName)
+    this.addNewFolderEvent.emit(folderName);
+    this.showNewFolderDialog = false;
+  }
+
+  public toggleNewFolderDialog() {
+    this.showNewFolderDialog = !this.showNewFolderDialog;
   }
 
   private updateSearchQuery() {

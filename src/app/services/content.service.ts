@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { ContentList } from '../models/content-item-list.model';
 import camelcaseKeys from 'camelcase-keys';
+import { NewFolder } from '../models/new-folder.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,16 @@ export class ContentService {
     headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('local_storage_token') ?? '');
     return this.http.delete<any>(`${this.conentUrl}${this.reponame}/folders/${id}`, {headers: headers, params: {'delete-content-and-subfolders' : true}});
   }
-  public createFolder() {}
+  public createFolder(path: string, name: string, kind: string = 'folder') {
+    const folderBody: NewFolder = {
+      kind: kind,
+      path: path,
+      name: name
+    }
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('local_storage_token') ?? '');
+    return this.http.post<any>(`${this.conentUrl}${this.reponame}/folders`, folderBody, {headers: headers});
+  }
 
 
   //Documents

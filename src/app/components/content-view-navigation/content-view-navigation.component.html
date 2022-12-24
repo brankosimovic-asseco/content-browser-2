@@ -5,6 +5,16 @@
   </div>
 
   <div class="filters">
+    <div style="position: relative;">
+      <button (click)="toggleNewFolderDialog()">New Folder</button>
+      <div *ngIf="showNewFolderDialog" class="new-folder-dropdown">
+        <label for="">Enter new folder name:</label>
+        <input [formControl]="newFolderNameControl" type="text">
+        <button [disabled]="newFolderNameControl.value === ''" (click)="addNewFolder(newFolderNameControl?.value)">Add</button>
+      </div>
+    </div>
+
+    <button>Upload</button>
     <select (change)="selectSortByChange($event)" name="Sort by" id="">
       <option disabled selected value>Sort by... </option>
       <option value="created-on">Created On</option>
@@ -15,8 +25,7 @@
       <option value="asc">ACS</option>
       <option value="desc">DECS</option>
     </select>
-    <button>New Folder</button>
-    <button>Upload</button>
+
     <input accesskey="s" #search (input)="this.searchQueryChanged.next($event)" placeholder="Search" type="search">
   </div>
 

@@ -27,6 +27,7 @@ export class ContentViewComponent implements OnInit {
   public currentRoute: string = '';
 
   private getFolderSubscription!: Subscription;
+  private addNewFolderSubscription!: Subscription;
 
   @ViewChild(ContentViewNavigationComponent) navigation!: ContentViewNavigationComponent;
 
@@ -79,6 +80,13 @@ export class ContentViewComponent implements OnInit {
     this.getFolderData(this.currentRoute);
   }
 
+  public handleAddNewFolder($event: string) {
+    this.addNewFolderSubscription = this.contentService.createFolder(this.currentRoute, $event).subscribe(() => {
+      console.log('added folder');
+      this.getFolderData(this.currentRoute);
+    });
+  }
+
   public handlePageChangeEvent($event: number) {
     console.log($event);
     this.currentPage = $event === 1 ? this.currentPage + 1 : this.currentPage - 1;
@@ -116,6 +124,7 @@ export class ContentViewComponent implements OnInit {
 
   ngOnDestroy() {
     this.getFolderSubscription.unsubscribe();
+    this.addNewFolderSubscription.unsubscribe();
   }
 
 }

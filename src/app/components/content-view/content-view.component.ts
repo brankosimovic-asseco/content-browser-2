@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { ContentList } from 'src/app/models/content-item-list.model';
 import { ContentService } from 'src/app/services/content.service';
 import { ContentViewNavigationComponent } from '../content-view-navigation/content-view-navigation.component';
@@ -25,6 +26,8 @@ export class ContentViewComponent implements OnInit {
 
   public currentRoute: string = '';
 
+  private getFolderSubscription!: Subscription;
+
   @ViewChild(ContentViewNavigationComponent) navigation!: ContentViewNavigationComponent;
 
   constructor(
@@ -43,24 +46,20 @@ export class ContentViewComponent implements OnInit {
 
   private getFolderData(path: string): void {
 
-    // FIXME: refactor this
+    let folderObservable = new Observable<ContentList>();
+
     if(this.searchQuery && this.searchQuery !== '') {
       if(path == '') path = ' ';
-      this.contentService.searchFolderByPath(this.searchQuery, path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder).subscribe((response) => {
-        console.log(response);
-        this.folderData = response;
-        this.currentRoute = path;
-        this.totalPages = response.totalPages ?? 1;
-      });
-    } else {
-      this.contentService.getFolderDataByPath(path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder).subscribe((response) => {
-        console.log(response);
-        this.folderData = response;
-        this.currentRoute = path;
-        this.totalPages = response.totalPages ?? 1;
-      });
-    }
+      folderObservable = this.contentService.searchFolderByPath(this.searchQuery, path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder);
 
+    } else {
+      folderObservable = this.contentService.getFolderDataByPath(path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder);
+    }
+    this.getFolderSubscription = folderObservable.subscribe((response: ContentList) => {
+      this.folderData = response;
+      this.currentRoute = path;
+      this.totalPages = response.totalPages ?? 1;
+    })
 
   }
 
@@ -113,6 +112,10 @@ export class ContentViewComponent implements OnInit {
     const q = $event;
     this.searchQuery = q;
     this.getFolderData(this.currentRoute);
+  }
+
+  ngOnDestroy() {
+    this.getFolderSubscription.unsubscribe();
   }
 
 }

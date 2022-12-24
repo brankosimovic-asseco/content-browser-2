@@ -29,9 +29,10 @@
         /* border: 1px solid gray; */
         padding: 0.25rem 0.5rem;
         border-radius: 1rem;
-        background-color: #e2e2e2;
+        background-color: #e2e2e275;
+        user-select: none;
         &:hover {
-          background-color: #c7c7c7;
+          background-color: #d4d4d4;
         }
       }
     }

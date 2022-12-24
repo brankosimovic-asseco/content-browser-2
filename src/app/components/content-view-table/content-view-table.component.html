@@ -11,7 +11,7 @@
       <th>Actions</th>
     </tr>
     <tr *ngFor="let item of contentData?.items"  class="content-table-row">
-      <td><input type="checkbox"></td>
+      <td><div style="display: flex; justify-content: center;"><input type="checkbox"></div></td>
       <td (click)="selectItem(item)" > <div class="item-name">
         <div><img [ngClass]="item?.kind === 'folder' ? 'item-kind' : ''" height="20px" [src]="item?.kind === 'folder' ? '../../../assets/folder.svg' : '../../../assets/doc.svg'"></div> <div>{{item?.name}}</div>
       </div></td>

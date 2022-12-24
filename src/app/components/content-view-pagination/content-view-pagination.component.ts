@@ -13,6 +13,7 @@ export class ContentViewPaginationComponent implements OnInit {
   @Input() totalPages!: number;
 
   @Output() changePageEvent = new EventEmitter<number>();
+  @Output() changePageSizeEvent = new EventEmitter<number>();
 
   ngOnInit(): void {
   }
@@ -30,6 +31,11 @@ export class ContentViewPaginationComponent implements OnInit {
 
   }
   public rewind() {}
+
+  public changePageSize($event: Event) {
+    const pageSize = ($event?.target as HTMLTextAreaElement).value;
+    this.changePageSizeEvent.emit(+pageSize);
+  }
 
   private changePage(direction: number) {
     this.changePageEvent.emit(direction);

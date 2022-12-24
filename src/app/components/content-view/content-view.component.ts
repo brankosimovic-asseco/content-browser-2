@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ContentList } from 'src/app/models/content-item-list.model';
 import { ContentService } from 'src/app/services/content.service';
+import { ContentViewNavigationComponent } from '../content-view-navigation/content-view-navigation.component';
 
 @Component({
   selector: 'app-content-view',
@@ -23,6 +24,8 @@ export class ContentViewComponent implements OnInit {
   public searchQuery!: string;
 
   public currentRoute: string = '';
+
+  @ViewChild(ContentViewNavigationComponent) navigation!: ContentViewNavigationComponent;
 
   constructor(
     private contentService: ContentService
@@ -57,16 +60,23 @@ export class ContentViewComponent implements OnInit {
   public handleFolderSelectedEvent($event: string) {
     console.log($event);
     this.currentPage = 1;
-
+    this.searchQuery = '';
+    this.navigation.clearSearchField();
     this.getFolderData($event);
   }
 
   public hanldeCrumbSelect($event: string) {
     console.log($event);
     this.currentPage = 1;
-
+    this.searchQuery = '';
+    this.navigation.clearSearchField();
     this.getFolderData($event);
     this.currentRoute = $event;
+  }
+
+  public handleChangePageSize($event: number) {
+    this.currentPageSize = $event;
+    this.getFolderData(this.currentRoute);
   }
 
   public handlePageChangeEvent($event: number) {

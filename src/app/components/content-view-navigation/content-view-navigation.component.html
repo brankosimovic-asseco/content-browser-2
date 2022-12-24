@@ -17,7 +17,7 @@
     </select>
     <button>New Folder</button>
     <button>Upload</button>
-    <input (input)="this.searchQueryChanged.next($event)" placeholder="Search" type="search">
+    <input aria-keyshortcuts="d" #search (input)="this.searchQueryChanged.next($event)" placeholder="Search" type="search">
   </div>
 
 </div>

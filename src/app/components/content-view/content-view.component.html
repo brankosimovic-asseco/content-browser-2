@@ -14,5 +14,6 @@
   <app-content-view-pagination
     [currentPage]="currentPage"
     [totalPages]="totalPages"
+    (changePageSizeEvent)="handleChangePageSize($event)"
     (changePageEvent)="handlePageChangeEvent($event)" ></app-content-view-pagination>
 </div>

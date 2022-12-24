@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
@@ -18,9 +18,11 @@ export class ContentViewNavigationComponent implements OnInit {
 
   @Output() changedSearchQueryEvent = new EventEmitter<string>();
 
+  @ViewChild('search') input!: ElementRef;
+
   public searchQueryChanged = new Subject<any>();
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.updateSearchQuery();
   }
 
@@ -42,6 +44,13 @@ export class ContentViewNavigationComponent implements OnInit {
   public selectSortOrderChange($event: Event) {
     const value = ($event?.target as HTMLTextAreaElement).value;
     this.selectedSortOrder.emit(value);
+  }
+
+  public clearSearchField() {
+    console.log(this.input);
+    if(this.input)
+      this.input.nativeElement.value = '';
+
   }
 
   private updateSearchQuery() {

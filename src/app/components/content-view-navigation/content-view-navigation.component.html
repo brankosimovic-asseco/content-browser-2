@@ -7,14 +7,30 @@
   <div class="filters">
     <div style="position: relative;">
       <button #newFolderButton (click)="toggleNewFolderDialog()">New Folder</button>
-      <div #newFolderForm *ngIf="showNewFolderDialog" class="new-folder-dropdown">
+      <div #newFolderForm *ngIf="showNewFolderDialog" class="dropdown">
         <label for="">Enter new folder name:</label>
         <input [formControl]="newFolderNameControl" type="text">
         <button [disabled]="newFolderNameControl.value === ''" (click)="addNewFolder(newFolderNameControl?.value)">Add</button>
       </div>
     </div>
 
-    <button>Upload</button>
+    <div style="position: relative;">
+      <button (click)="toggleUploadDialog()" #uploadButton>Upload</button>
+      <div #uploadForm *ngIf="showUploadDialog" class="dropdown">
+        <span>Upload files</span>
+        <div (click)="fileInput.click()" class="file-dropdown-area">
+          Click or drag files to upload
+        </div>
+        <input (change)="updateFiles(fileInput.files)" #fileInput multiple hidden type="file">
+        <div>
+          <div class="file-name" *ngFor="let fileName of fileList">{{fileName}}</div>
+        </div>
+
+        <button [disabled]="fileList.length == 0" (click)="uploadNewFiles(fileInput.files)">Upload</button>
+      </div>
+    </div>
+
+
     <select (change)="selectSortByChange($event)" name="Sort by" id="">
       <option disabled selected value>Sort by... </option>
       <option value="created-on">Created On</option>

@@ -43,7 +43,9 @@ export class ContentService {
     return this.http.get<ContentList>(`${this.conentUrl}${this.reponame}/${path}/search`, {params: params}).pipe(map(r => camelcaseKeys(r, {deep: true})));
   }
   public searchFolderById() {}
-  public getFolderMetadataByPath() {}
+  public getFolderMetadataByPath(path: string) {
+    return this.http.get<any>(`${this.conentUrl}${this.reponame}/${path}/metadata`);
+  }
   public getFolderMetadataById() {}
   public updateFolderMetadata() {}
   public deleteFolderById(id: string) {
@@ -64,7 +66,24 @@ export class ContentService {
 
 
   //Documents
-  public uploadDocuments() {}
+  public uploadDocuments(id: string, file: any) {
+    let formData = new FormData();
+
+    formData.set('content-stream', file);
+    formData.set('name', file.name);
+    formData.set('media-type', file.type);
+    formData.set('filing-case-number', 'test');
+    formData.set('filing-case-kind', 'unspecified');
+    formData.set('overwrite-if-exists', 'true');
+
+
+    // console.log(formData.getAll('content'));
+
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('local_storage_token') ?? '');
+    return this.http.post<any>(`${this.conentUrl}${this.reponame}/folders/${id}`, formData, {headers: headers});
+
+  }
   public getDocumentMetadata() {}
   public downloadDocument(path: string, fileName: string){
     const httpOptions = {

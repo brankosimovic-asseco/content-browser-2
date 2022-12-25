@@ -17,6 +17,7 @@ export class ContentViewNavigationComponent implements OnInit {
   @Output() selectedSortByMethod = new EventEmitter<string>();
   @Output() selectedSortOrder = new EventEmitter<string>();
   @Output() addNewFolderEvent = new EventEmitter<string>();
+  @Output() uploadFilesEvent = new EventEmitter<FileList>();
 
   @Output() changedSearchQueryEvent = new EventEmitter<string>();
 
@@ -25,17 +26,21 @@ export class ContentViewNavigationComponent implements OnInit {
   @ViewChild('newFolderButton') newFolderButton!: ElementRef;
   @ViewChild('newFolderForm') newFolderForm!: ElementRef;
 
+  @ViewChild('uploadButton') uploadButton!: ElementRef;
+  @ViewChild('uploadForm') uploadForm!: ElementRef;
+
   public newFolderNameControl = new FormControl('');
+  public fileUploadControl = new FormControl('');
+  public fileList  = [];
 
   public showNewFolderDialog: boolean = false;
+  public showUploadDialog: boolean = false;
 
   public searchQueryChanged = new Subject<any>();
 
   constructor(private cdr: ChangeDetectorRef, private renderer: Renderer2) {
     this.updateSearchQuery();
     this.renderer.listen('window', 'click', (event: Event) => {
-      console.log(this.newFolderForm?.nativeElement.children);
-
       /**
        * If we didn't click on the new folder button or dropdown form close the dropdown
        * we also have to include the dropdown children in the check with the include method
@@ -45,6 +50,14 @@ export class ContentViewNavigationComponent implements OnInit {
         && !Array.from(this.newFolderForm?.nativeElement.children ?? [])?.includes(event.target)){
           this.showNewFolderDialog = false;
       }
+
+      if(event.target !== this.uploadButton.nativeElement
+        && event.target !== this.uploadForm?.nativeElement
+        && !Array.from(this.uploadForm?.nativeElement.children ?? [])?.includes(event.target)){
+          this.showUploadDialog = false;
+      }
+
+
     })
   }
 
@@ -75,6 +88,10 @@ export class ContentViewNavigationComponent implements OnInit {
 
   }
 
+  public updateFiles($event: any) {
+    this.fileList = Array.from($event).map((f: any) => f.name) as never[];
+  }
+
   public addNewFolder(folderName: any) {
     // emit event
     console.log(folderName)
@@ -82,9 +99,20 @@ export class ContentViewNavigationComponent implements OnInit {
     this.showNewFolderDialog = false;
   }
 
+  public uploadNewFiles(files: any) {
+    console.log(files);
+    this.uploadFilesEvent.emit(files);
+    this.showUploadDialog = false;
+    this.fileList = [];
+  }
+
   public toggleNewFolderDialog() {
     this.showNewFolderDialog = !this.showNewFolderDialog;
     this.newFolderNameControl.setValue('');
+  }
+
+  public toggleUploadDialog() {
+    this.showUploadDialog = !this.showUploadDialog;
   }
 
   private updateSearchQuery() {

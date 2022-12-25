@@ -14,6 +14,10 @@ export class EnviromentSelectComponent implements OnInit {
   public isTokenExpired!: boolean;
   public enviroments!: Array<any>;
 
+  public tokenIssuer!: string;
+  public tokenName!: string;
+  public displayTokenInfo!: boolean;
+
   @Output() enviromentSelectEvent = new EventEmitter<boolean>();
   constructor() { }
 
@@ -42,6 +46,9 @@ export class EnviromentSelectComponent implements OnInit {
     const token = localStorage.getItem('local_storage_token');
     if(!token || token === '') return;
     const decoded = jwt_decode(token ?? '') as any;
+    this.tokenIssuer = decoded['iss'];
+    this.tokenName = decoded['name'];
+    if(this.tokenIssuer && this.tokenName) this.displayTokenInfo = true;
     const expireTimestamp = decoded["exp"];
     if(expireTimestamp) {
       this.isTokenExpired = new Date(expireTimestamp * 1000) < new Date();

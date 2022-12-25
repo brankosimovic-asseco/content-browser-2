@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { forkJoin, Observable, ObservableInput, Subscription } from 'rxjs';
 import { ContentList } from 'src/app/models/content-item-list.model';
 import { ContentService } from 'src/app/services/content.service';
 import { ContentViewNavigationComponent } from '../content-view-navigation/content-view-navigation.component';
@@ -60,7 +60,24 @@ export class ContentViewComponent implements OnInit {
       this.folderData = response;
       this.currentRoute = path;
       this.totalPages = response.totalPages ?? 1;
+      console.log('response', response);
     })
+
+  }
+
+  public handleUploadFilesEvent($event: FileList) {
+    console.log(this.currentRoute);
+    const documentsToUpload: Array<any> = [];
+    this.contentService.getFolderMetadataByPath(this.currentRoute).subscribe((res) => {
+      Array.from($event).forEach((f) => {
+        documentsToUpload.push(this.contentService.uploadDocuments(res.id, f));
+      });
+      forkJoin(documentsToUpload).subscribe(() => {
+        this.getFolderData(this.currentRoute);
+      });
+
+    })
+    console.log($event, 'files');
 
   }
 

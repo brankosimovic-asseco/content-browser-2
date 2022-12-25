@@ -2,6 +2,15 @@
   <div class="env-buttons">
     <button [ngClass]="env.isActive ? 'env-button active' : 'env-button'" (click)="setActiveEnviroment(env)" *ngFor="let env of enviroments">{{env.name}}</button>
   </div>
-  <input placeholder="Token" [formControl]="tokenInput" >
-  <div *ngIf="isTokenExpired" class="warning-message">Warning: Token is expired!</div>
+  <div>
+    <input placeholder="Token" [formControl]="tokenInput" >
+    <div *ngIf="isTokenExpired" class="warning-message">Warning: Token is expired!</div>
+    <div *ngIf="displayTokenInfo" style="font-size: x-small; color: gray;">
+      <div>Issuer: {{tokenIssuer}}</div>
+      <div>Name: {{tokenName}}</div>
+    </div>
+
+  </div>
+
+
 </div>

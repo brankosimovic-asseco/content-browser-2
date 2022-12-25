@@ -23,7 +23,7 @@ export class ContentViewComponent implements OnInit {
   public currentFolderId = '';
 
   public searchQuery!: string;
-
+  public loading!: boolean;
   public currentRoute: string = '';
 
   private getFolderSubscription!: Subscription;
@@ -47,6 +47,7 @@ export class ContentViewComponent implements OnInit {
 
   private getFolderData(path: string): void {
 
+    this.loading = true;
     let folderObservable = new Observable<ContentList>();
 
     if(this.searchQuery && this.searchQuery !== '') {
@@ -61,12 +62,16 @@ export class ContentViewComponent implements OnInit {
       this.currentRoute = path;
       this.totalPages = response.totalPages ?? 1;
       console.log('response', response);
+      this.loading = false;
+    }, (err) => {
+      this.loading = false;
     })
 
   }
 
   public handleUploadFilesEvent($event: FileList) {
     console.log(this.currentRoute);
+    this.loading = true;
     const documentsToUpload: Array<any> = [];
     this.contentService.getFolderMetadataByPath(this.currentRoute).subscribe((res) => {
       Array.from($event).forEach((f) => {
@@ -74,6 +79,9 @@ export class ContentViewComponent implements OnInit {
       });
       forkJoin(documentsToUpload).subscribe(() => {
         this.getFolderData(this.currentRoute);
+        this.loading = false;
+      }, (err) => {
+        this.loading = false;
       });
 
     })

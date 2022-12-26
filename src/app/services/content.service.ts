@@ -80,6 +80,7 @@ export class ContentService {
     // console.log(formData.getAll('content'));
 
     let headers = new HttpHeaders();
+    headers = headers.append('Accept', '*/*');
     headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('local_storage_token') ?? '');
     return this.http.post<any>(`${this.conentUrl}${this.reponame}/folders/${id}`, formData, {headers: headers});
 

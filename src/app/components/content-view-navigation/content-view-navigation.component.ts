@@ -123,7 +123,7 @@ export class ContentViewNavigationComponent implements OnInit {
       // emit event to view;
       const searchQuery = (event.target as HTMLTextAreaElement).value;
       console.log(searchQuery);
-      this.changedSearchQueryEvent.emit(searchQuery);
+      this.changedSearchQueryEvent.emit(searchQuery.trim());
     });
   }
 

@@ -15,7 +15,8 @@ export class ContentViewTableComponent implements OnInit {
 
 
   public mime = mime;
-
+  public isOverviewOpen = false;
+  public itemData: any;
 
   constructor(private contentService: ContentService) {
    }
@@ -64,6 +65,33 @@ export class ContentViewTableComponent implements OnInit {
     }
 
 
+  }
+
+  public openInfoDialog(item: ContentItem) {
+    console.log('item', item);
+    this.isOverviewOpen = true;
+    this.itemData =  Object.entries(item);
+    console.log(this.itemData);
+  }
+
+  public closeInfoDialog() {
+    this.isOverviewOpen = false;
+  }
+
+  public getDocumentKindColor(mediaType: string) {
+    let className = '';
+    console.log(mime.getExtension(mediaType), mediaType);
+    switch (mime.getExtension(mediaType)) {
+      case 'pdf':
+        className = 'red'
+        break;
+      case 'docx':
+        className = 'blue'
+        break;
+      default:
+        break;
+    }
+    return className;
   }
 
 }

@@ -14,6 +14,11 @@ export const environment = {
       name: 'HALK-DEV',
       url: 'https://dev-halkbbg.df.asee.dev/v1',
       isActive: false
+    },
+    {
+      name: 'UAT',
+      url: 'https://digital-frontline.cabank.co.yu/v1',
+      isActive: false
     }
   ]
 };

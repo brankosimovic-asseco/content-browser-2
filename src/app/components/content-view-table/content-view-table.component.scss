@@ -32,7 +32,7 @@
       }
     }
     .item-kind {
-      filter: invert(0.5) sepia(1) saturate(5) hue-rotate(200deg);
+      filter: invert(0.5) sepia(1) saturate(5) hue-rotate(360deg);
     }
   }
   .content-table-row {
@@ -64,3 +64,17 @@
 }
 
 
+dialog::backdrop {
+  backdrop-filter: blur(2px);
+
+}
+
+dialog {
+  position: fixed;
+  top: 20px;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  padding:2rem 3rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

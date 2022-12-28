@@ -23,7 +23,7 @@
           <img [class]="item.kind === 'folder' ? 'disabled' : 'primary'" src="../../../assets/actions/download.svg" height="20" alt="">
           </button>
           <button (click)="deleteItem(item)" class="action-button" ><img class="warn"  src="../../../assets/actions/delete.svg" height="20" alt=""></button>
-          <button class="action-button" ><img class="primary" src="../../../assets/actions/info.svg" height="20" alt=""></button>
+          <button class="action-button" (click)="openInfoDialog(item)" ><img class="primary" src="../../../assets/actions/info.svg" height="20" alt=""></button>
       </div>
       </td>
     </tr>
@@ -33,3 +33,13 @@
 <ng-template #emptyView>
   <app-empty-view></app-empty-view>
 </ng-template>
+
+
+<dialog *ngIf="this.itemData" [open]="isOverviewOpen" id="dialog">
+
+  <p>Information overview</p>
+  <div *ngFor="let prop of this.itemData">
+    <div>{{prop[0]}} : {{prop[1]}}</div>
+  </div>
+  <button (click)="closeInfoDialog()">Close</button>
+</dialog>

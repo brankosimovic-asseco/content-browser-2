@@ -118,6 +118,15 @@ export class ContentViewComponent implements OnInit {
     this.getFolderData(this.currentRoute)
   }
 
+  public handleFastForwardEvent($event: number) {
+    if(this.totalPages == 0 || this.totalPages == 1) return;
+    if($event == 0)
+      this.currentPage = 1;
+    else this.currentPage = this.totalPages ?? 1;
+
+    this.getFolderData(this.currentRoute);
+  }
+
   public handleItemDeleted($event: boolean) {
     if($event) this.getFolderData(this.currentRoute);
     console.log('deleted');

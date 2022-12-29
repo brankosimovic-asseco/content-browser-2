@@ -9,3 +9,4 @@ export interface ContentList {
   sortBy?:     string;
   items?:      ContentItem[];
 }
+

@@ -1,9 +1,9 @@
 <div class="pagination">
-  <button>&lt;&lt;</button>
+  <button (click)="fastForwardToFirstPage()">&lt;&lt;</button>
   <button (click)="previousPage()">&lt;</button>
   <div class="page">{{currentPage}}/{{totalPages === 0 ? 1: totalPages}}</div>
   <button (click)="nextPage()">&gt;</button>
-  <button>&gt;&gt;</button>
+  <button (click)="fastForwardToLastPage()">&gt;&gt;</button>
   <select (change)="changePageSize($event)" name="" id="">
     <option value="20">20</option>
     <option value="50">50</option>

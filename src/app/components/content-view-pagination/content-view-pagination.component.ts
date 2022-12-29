@@ -14,6 +14,7 @@ export class ContentViewPaginationComponent implements OnInit {
 
   @Output() changePageEvent = new EventEmitter<number>();
   @Output() changePageSizeEvent = new EventEmitter<number>();
+  @Output() fastForwardPageEvent = new EventEmitter<number>();
 
   ngOnInit(): void {
   }
@@ -23,7 +24,7 @@ export class ContentViewPaginationComponent implements OnInit {
     this.changePage(-1);
   }
   public nextPage() {
-    if(this.currentPage == this.totalPages) return
+    if(this.currentPage == this.totalPages || this.totalPages === 0) return
     this.changePage(1);
   }
 
@@ -37,8 +38,17 @@ export class ContentViewPaginationComponent implements OnInit {
     this.changePageSizeEvent.emit(+pageSize);
   }
 
+  public fastForwardToLastPage() {
+    this.fastForwardPageEvent.emit(1);
+  }
+
+  public fastForwardToFirstPage() {
+    this.fastForwardPageEvent.emit(0);
+  }
+
   private changePage(direction: number) {
     this.changePageEvent.emit(direction);
   }
+
 
 }

@@ -5,3 +5,15 @@
   font-family: 'PT Sans', sans-serif;
 
 }
+
+@mixin action-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.action-button {
+  @include action-button();
+}

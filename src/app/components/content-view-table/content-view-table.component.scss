@@ -63,18 +63,31 @@
   }
 }
 
+.info-properties {
+  text-align: right;
+  color: #ababab;
+  font-weight: bold;
+}
+
 
 dialog::backdrop {
-  backdrop-filter: blur(2px);
-
+  background-color: darkorange;
 }
 
 dialog {
   position: fixed;
-  top: 20px;
+  top: 2rem;
   outline: none;
-  border: none;
+  border: 1px solid rgb(188, 188, 188);
   border-radius: 0.5rem;
   padding:2rem 3rem;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  .close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    img {
+      filter: invert(0.5) sepia(1) saturate(5) hue-rotate(200deg)
+    }
+  }
 }

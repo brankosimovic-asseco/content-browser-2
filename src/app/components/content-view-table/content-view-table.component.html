@@ -37,9 +37,15 @@
 
 <dialog *ngIf="this.itemData" [open]="isOverviewOpen" id="dialog">
 
-  <p>Information overview</p>
-  <div *ngFor="let prop of this.itemData">
-    <div>{{prop[0]}} : {{prop[1]}}</div>
-  </div>
-  <button (click)="closeInfoDialog()">Close</button>
+  <p style="font-weight: bold;">Information overview</p>
+  <table style="font-size: small;">
+    <tr *ngFor="let prop of this.itemData">
+     <td class="info-properties">{{prop[0]}}:</td>
+     <td> {{prop[0] === 'extended' ? (prop[1] | json) : prop[1]}}</td>
+    </tr>
+  </table>
+
+  <button class="action-button close" (click)="closeInfoDialog()">
+    <img height="20" src="../../../assets/actions/close.svg" alt="" srcset="">
+  </button>
 </dialog>

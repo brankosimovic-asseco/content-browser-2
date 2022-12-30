@@ -102,6 +102,7 @@ export class ContentViewComponent implements OnInit {
 
   public handleChangePageSize($event: number) {
     this.currentPageSize = $event;
+    this.currentPage = 1;
     this.getFolderData(this.currentRoute);
   }
 

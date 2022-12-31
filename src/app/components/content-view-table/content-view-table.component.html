@@ -42,6 +42,8 @@
     <tr *ngFor="let prop of this.itemData">
      <td class="info-properties">{{prop[0]}}:</td>
      <td> {{prop[0] === 'extended' ? (prop[1] | json) : prop[1]}}</td>
+     <td><button (click)="copyToClipboard(prop[1])" class="action-button"><img id="copy-button" height="14" src="../../../assets/actions/copy.svg" alt=""></button></td>
+     <td><button class="action-button"><img id="copy-button" height="14" src="../../../assets/actions/edit.svg" alt=""></button></td>
     </tr>
   </table>
 

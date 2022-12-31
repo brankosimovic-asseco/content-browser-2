@@ -82,6 +82,9 @@ dialog {
   border-radius: 0.5rem;
   padding:2rem 3rem;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  #copy-button {
+    filter: opacity(0.5)
+  }
   .close {
     position: absolute;
     top: 1rem;

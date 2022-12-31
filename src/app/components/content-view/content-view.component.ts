@@ -131,6 +131,7 @@ export class ContentViewComponent implements OnInit {
   public handleItemDeleted($event: boolean) {
     if($event) this.getFolderData(this.currentRoute);
     console.log('deleted');
+    // FIXME:
     // Open small popup that says item has been deleted
   }
 

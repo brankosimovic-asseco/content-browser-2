@@ -94,4 +94,13 @@ export class ContentViewTableComponent implements OnInit {
     return className;
   }
 
+  public copyToClipboard(text: string) {
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.clipboardData?.setData('text/plain', (text));
+      e.preventDefault();
+      document.removeEventListener('copy', ()=> {});
+    });
+    document.execCommand('copy');
+  }
+
 }

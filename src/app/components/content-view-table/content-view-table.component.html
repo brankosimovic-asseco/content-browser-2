@@ -10,8 +10,8 @@
       <th>Changed On</th>
       <th>Actions</th>
     </tr>
-    <tr *ngFor="let item of contentData?.items"  class="content-table-row">
-      <td><div style="display: flex; justify-content: center;"><input type="checkbox"></div></td>
+    <tr *ngFor="let item of contentData?.items; let i = index"  class="content-table-row">
+      <td><div (click)="toggleItem(i)" style="display: flex; justify-content: center;"><input type="checkbox"></div></td>
       <td (click)="selectItem(item)" > <div class="item-name">
         <div style="display: flex; align-items: center;"><img [ngClass]="item?.kind === 'folder' ? 'item-kind' : ''" height="20px" [src]="item?.kind === 'folder' ? '../../../assets/folder.svg' : '../../../assets/doc.svg'"></div> <div>{{item?.name}}</div>
       </div></td>

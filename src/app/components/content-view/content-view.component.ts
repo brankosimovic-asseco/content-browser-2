@@ -52,6 +52,7 @@ export class ContentViewComponent implements OnInit {
 
     if(this.searchQuery && this.searchQuery !== '') {
       if(path == '') path = ' ';
+      this.currentPage = 1;
       folderObservable = this.contentService.searchFolderByPath(this.searchQuery, path, 'any', this.currentPage, this.currentPageSize, this.sortBy, this.sortOrder);
 
     } else {

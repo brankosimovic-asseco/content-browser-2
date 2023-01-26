@@ -18,6 +18,8 @@ export class ContentViewTableComponent implements OnInit {
   public isOverviewOpen = false;
   public itemData: any;
 
+  public selectedItems: number[] = [];
+
   constructor(private contentService: ContentService) {
    }
 
@@ -101,6 +103,16 @@ export class ContentViewTableComponent implements OnInit {
       document.removeEventListener('copy', ()=> {});
     });
     document.execCommand('copy');
+  }
+
+  public toggleItem(index: number) {
+    if(this.selectedItems.includes(index)) {
+      const indexToDelete = this.selectedItems.indexOf(index);
+      this.selectedItems.splice(indexToDelete,1);
+    } else {
+      this.selectedItems.push(index);
+    }
+
   }
 
 }

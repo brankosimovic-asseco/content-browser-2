@@ -16,6 +16,8 @@ export class ContentViewTableComponent implements OnInit {
   public isDeleteOpen = false;
   public itemData: any;
 
+  public selectedItem: any;
+
   public selectedItems: number[] = [];
 
   constructor(private contentService: ContentService) {
@@ -56,9 +58,13 @@ export class ContentViewTableComponent implements OnInit {
     // if item is folder delete document by id, else delete folder
       this.isDeleteOpen = true;
       this.itemData =  Object.entries(item);
+      this.selectedItem = item;
+      console.log(this.selectedItem,'test!');
   }
 
   public deleteItem(item: ContentItem) {
+    item = this.selectedItem;
+    console.log(this.selectedItem, item, 'test2!');
     // if item is folder delete document by id, else delete folder
     if(item.kind === ContentItemKind.Folder) {
       this.contentService.deleteFolderById(item.id ?? '').subscribe(() => {
@@ -69,6 +75,7 @@ export class ContentViewTableComponent implements OnInit {
         this.itemDeletedEvent.emit(true);
       });
     }
+    this.isDeleteOpen = false;
   }
 
   public openInfoDialog(item: ContentItem) {

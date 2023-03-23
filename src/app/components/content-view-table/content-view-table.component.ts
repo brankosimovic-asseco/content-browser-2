@@ -3,9 +3,6 @@ import { ContentList } from 'src/app/models/content-item-list.model';
 import { ContentItem, ContentItemKind } from 'src/app/models/content-item.model';
 import * as mime from 'mime'
 import { ContentService } from 'src/app/services/content.service';
-
-
-
 @Component({
   selector: 'app-content-view-table',
   templateUrl: './content-view-table.component.html',
@@ -16,6 +13,7 @@ export class ContentViewTableComponent implements OnInit {
 
   public mime = mime;
   public isOverviewOpen = false;
+  public isDeleteOpen = false;
   public itemData: any;
 
   public selectedItems: number[] = [];
@@ -54,6 +52,12 @@ export class ContentViewTableComponent implements OnInit {
     });
   }
 
+  public tryDelete(item: ContentItem) {
+    // if item is folder delete document by id, else delete folder
+      this.isDeleteOpen = true;
+      this.itemData =  Object.entries(item);
+  }
+
   public deleteItem(item: ContentItem) {
     // if item is folder delete document by id, else delete folder
     if(item.kind === ContentItemKind.Folder) {
@@ -65,8 +69,6 @@ export class ContentViewTableComponent implements OnInit {
         this.itemDeletedEvent.emit(true);
       });
     }
-
-
   }
 
   public openInfoDialog(item: ContentItem) {
@@ -78,6 +80,7 @@ export class ContentViewTableComponent implements OnInit {
 
   public closeInfoDialog() {
     this.isOverviewOpen = false;
+    this.isDeleteOpen = false;
   }
 
   public getDocumentKindColor(mediaType: string) {

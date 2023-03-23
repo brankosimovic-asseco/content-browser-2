@@ -89,6 +89,28 @@ dialog {
     position: absolute;
     top: 1rem;
     right: 1rem;
+    img { 
+      filter: invert(0.5) sepia(1) saturate(5) hue-rotate(200deg)
+    }
+  }
+}
+
+#deletedialog::backdrop {
+  background-color: darkorange;
+}
+
+#deletedialog {
+  position: fixed;
+  top: 2rem;
+  outline: none;
+  border: 1px solid rgb(188, 188, 188);
+  border-radius: 0.5rem;
+  padding:2rem 3rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  .delete {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     img {
       filter: invert(0.5) sepia(1) saturate(5) hue-rotate(200deg)
     }

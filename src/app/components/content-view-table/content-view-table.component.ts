@@ -3,9 +3,6 @@ import { ContentList } from 'src/app/models/content-item-list.model';
 import { ContentItem, ContentItemKind } from 'src/app/models/content-item.model';
 import * as mime from 'mime'
 import { ContentService } from 'src/app/services/content.service';
-
-
-
 @Component({
   selector: 'app-content-view-table',
   templateUrl: './content-view-table.component.html',
@@ -16,7 +13,10 @@ export class ContentViewTableComponent implements OnInit {
 
   public mime = mime;
   public isOverviewOpen = false;
+  public isDeleteOpen = false;
   public itemData: any;
+
+  public selectedItem: any;
 
   public selectedItems: number[] = [];
 
@@ -54,7 +54,17 @@ export class ContentViewTableComponent implements OnInit {
     });
   }
 
+  public tryDelete(item: ContentItem) {
+    // if item is folder delete document by id, else delete folder
+      this.isDeleteOpen = true;
+      this.itemData =  Object.entries(item);
+      this.selectedItem = item;
+      console.log(this.selectedItem,'test!');
+  }
+
   public deleteItem(item: ContentItem) {
+    item = this.selectedItem;
+    console.log(this.selectedItem, item, 'test2!');
     // if item is folder delete document by id, else delete folder
     if(item.kind === ContentItemKind.Folder) {
       this.contentService.deleteFolderById(item.id ?? '').subscribe(() => {
@@ -65,8 +75,7 @@ export class ContentViewTableComponent implements OnInit {
         this.itemDeletedEvent.emit(true);
       });
     }
-
-
+    this.isDeleteOpen = false;
   }
 
   public openInfoDialog(item: ContentItem) {
@@ -78,6 +87,7 @@ export class ContentViewTableComponent implements OnInit {
 
   public closeInfoDialog() {
     this.isOverviewOpen = false;
+    this.isDeleteOpen = false;
   }
 
   public getDocumentKindColor(mediaType: string) {

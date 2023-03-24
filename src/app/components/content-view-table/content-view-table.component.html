@@ -22,7 +22,7 @@
         <button class="action-button" (click)="downloadFile(item)" [disabled]="item.kind === 'folder'">
           <img [class]="item.kind === 'folder' ? 'disabled' : 'primary'" src="../../../assets/actions/download.svg" height="20" alt="">
           </button>
-          <button (click)="deleteItem(item)" class="action-button" ><img class="warn"  src="../../../assets/actions/delete.svg" height="20" alt=""></button>
+          <button (click)="tryDelete(item)" class="action-button" ><img class="warn"  src="../../../assets/actions/delete.svg" height="20" alt=""></button>
           <button class="action-button" (click)="openInfoDialog(item)" ><img class="primary" src="../../../assets/actions/info.svg" height="20" alt=""></button>
       </div>
       </td>
@@ -50,4 +50,39 @@
   <button class="action-button close" (click)="closeInfoDialog()">
     <img height="20" src="../../../assets/actions/close.svg" alt="" srcset="">
   </button>
+</dialog>
+
+<dialog *ngIf="this.itemData" [open]="isDeleteOpen" id="deletedialog">
+
+  <p style="font-weight: bold;">Warning</p>
+
+  <p style="margin: auto; margin-bottom: 15px;"> Are you sure you want to delete this item?</p>
+
+  <div style="margin: auto; display: flex; justify-content: center; flex-direction: column;">
+    <button style="margin-bottom: 15px;
+      border-radius: 5px;
+      border: solid 1px black;
+      background-color: rgb(255, 69, 69); 
+      color: white; 
+      font-weight: bold;"
+      (click)="deleteItem(selectedItem)"
+    >
+    <div style="display: flex; justify-content: center; align-items: center; height: 26px;">
+      <span style="display:block; margin-right: 4px;">Delete</span> 
+      <img height="20px" src="../../../assets/actions/delete.svg" alt="" srcset="">
+    </div>
+    </button>
+
+    <button style="margin-bottom: 15px;
+      border-radius: 5px;
+      border: solid 1px black;
+      font-weight: bold;"
+      (click)="closeInfoDialog()"
+    >
+    <div style="display: flex; justify-content: center; align-items: center; height: 26px;">
+      <span style="display:block; margin-right: 4px;">Close</span> 
+      <img height="20px" src="../../../assets/actions/close.svg" alt="" srcset="">
+    </div>
+    </button>
+  </div>
 </dialog>

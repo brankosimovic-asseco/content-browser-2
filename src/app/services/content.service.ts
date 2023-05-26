@@ -26,7 +26,9 @@ export class ContentService {
     params = params.append('sort-by', sortBy ?? '');
     params = params.append('sort-order', sortOrder ?? 'acs');
     console.log(params.keys(), 'params', page)
-    return this.http.get<ContentList>(`${this.conentUrl}${this.reponame}/${path}`, {params: params}).pipe(map(r => camelcaseKeys(r, {deep: true})));
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('local_storage_token') ?? '');
+    return this.http.get<ContentList>(`${this.conentUrl}${this.reponame}/${path}`, {params: params, headers}).pipe(map(r => camelcaseKeys(r, {deep: true})));
   }
 
   public searchFolderByPath(q: string, path: string, kind?: string, page?: number, pageSize?:number, sortBy?: string, sortOrder?: string, subfolders: boolean = false) {
@@ -38,11 +40,15 @@ export class ContentService {
     params = params.append('sort-order', sortOrder ?? 'acs');
     params = params.append('q', q);
     params = params.append('search-mode', 'any');
-    return this.http.get<ContentList>(`${this.conentUrl}${this.reponame}/${path}/search`, {params: params}).pipe(map(r => camelcaseKeys(r, {deep: true})));
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('local_storage_token') ?? '');
+    return this.http.get<ContentList>(`${this.conentUrl}${this.reponame}/${path}/search`, {params: params, headers}).pipe(map(r => camelcaseKeys(r, {deep: true})));
   }
   public searchFolderById() {}
   public getFolderMetadataByPath(path: string) {
-    return this.http.get<any>(`${this.conentUrl}${this.reponame}/${path}/metadata`);
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('local_storage_token') ?? '');
+    return this.http.get<any>(`${this.conentUrl}${this.reponame}/${path}/metadata`, {headers});
   }
   public getFolderMetadataById() {}
   public updateFolderMetadata() {}
@@ -85,9 +91,13 @@ export class ContentService {
   }
   public getDocumentMetadata() {}
   public downloadDocument(path: string, fileName: string){
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('local_storage_token') ?? '');
     const httpOptions = {
-      responseType: 'blob' as 'json'
+      responseType: 'blob' as 'json',
+      headers: headers
     };
+
     return this.http.get<any>(`${this.conentUrl}${this.reponame}${path}/${fileName}`,httpOptions);
   }
   public deleteDocumentById(id: string) {

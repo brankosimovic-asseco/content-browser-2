@@ -12,7 +12,7 @@ export const environment = {
     },
     {
       name: 'HALK-DEV',
-      url: 'https://dev-halkbbg.df.asee.dev/v1',
+      url: 'https://apis-dev-halkbbg.df.asee.dev/v1',
       isActive: false
     },
     {
